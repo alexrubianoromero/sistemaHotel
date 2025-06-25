@@ -1,0 +1,12 @@
+  .mi-div {
+                    height: 80vh; /* ¡Aquí está la clave! 80% del alto del viewport (ventana del navegador) */
+                    background-color: lightblue; /* Solo para que veas el div */
+                    border: 2px solid steelblue; /* Solo para que veas el div */
+                    box-sizing: border-box; /* Incluye padding y border en el height/width total */
+                    display: flex; /* Para centrar el contenido, si lo añades */
+                    justify-content: center;
+                    align-items: center;
+                    font-family: sans-serif;
+                    font-size: 2em;
+                    color: #333;
+                }
