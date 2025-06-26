@@ -8,7 +8,7 @@ class ItemChecklistModelModel extends Conexion
     public function traerItemsCheckList()
     {
         // echo 'traer gestines '; 
-        $sql = "select * from itemschecklist order by id desc";
+        $sql = "select * from itemschecklist order by id asc";
         // die($sql);
          $consulta = mysql_query($sql,$this->connectMysql()); 
          $ordenes = $this->get_table_assoc($consulta);

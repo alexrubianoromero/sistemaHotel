@@ -20,13 +20,33 @@ class GestionModel extends Conexion
         {
             $fechaActual = new DateTime();
             $fechaParaMySQL = $fechaActual->format('Y-m-d H:i:s');
-            $sql = "insert into gestiones (observaciones, fecha)   
-            values('".$request['observaciones']."','".$fechaParaMySQL."'
+            $sql = "insert into gestiones (idHabitacion, fecha)   
+            values('".$request['idHabitacion']."','".$fechaParaMySQL."'
             
             )"; 
             $consulta = mysql_query($sql,$this->connectMysql()); 
+            $maxId = $this->traerMaxIdGestion();
+            return $maxId;
         }
+        
+        public function crearChecklistHabitacion($idGestion,$idHabitacion,$items)
+        {
+            foreach($items as $item)
+            {
+                $sql = "insert into itemsXHabitacion (idGestion,idhabitacion,idItem)
+                values('".$idGestion."','".$idHabitacion."','".$item['id']."')
+                ";
+                $consulta = mysql_query($sql,$this->connectMysql()); 
+            }
+        }  
 
+        public function traerMaxIdGestion()
+        {
+            $sql = "select max(id) as maxId from gestiones";
+            $consulta = mysql_query($sql,$this->connectMysql()); 
+            $respu = mysql_fetch_assoc($consulta);
+            return $respu['maxId'];
+      }
 }
 
 

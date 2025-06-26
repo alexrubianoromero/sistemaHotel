@@ -14,6 +14,22 @@
         // + "&tipoMov=2"
         );
     }
+ function muestreListadoCheckList(){
+        const http=new XMLHttpRequest();
+        const url = '../habitaciones/habitaciones.php';
+        http.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status ==200){
+                document.getElementById("div_muestre_checklist").innerHTML = this.responseText;
+            }
+        };
+        
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send("opcion=muestreListadoCheckList"
+        // + "&id="+id
+        // + "&tipoMov=2"
+        );
+    }
 
  function traerHabitacionesXIdHotel(){
          var idHotel =  document.getElementById("idHotel").value;
@@ -28,6 +44,22 @@
         http.open("POST",url);
         http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         http.send("opcion=traerHabitacionesXIdHotel"
+        + "&idHotel="+idHotel
+        );
+    }
+ function selectHabitacionesXIdHotel(){
+         var idHotel =  document.getElementById("idHotel").value;
+        const http=new XMLHttpRequest();
+        const url = '../habitaciones/habitaciones.php';
+        http.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status ==200){
+                document.getElementById("idHabitacion").innerHTML = this.responseText;
+            }
+        };
+        
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send("opcion=selectHabitacionesXIdHotel"
         + "&idHotel="+idHotel
         );
     }

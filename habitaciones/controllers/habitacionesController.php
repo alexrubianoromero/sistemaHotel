@@ -28,6 +28,14 @@ class habitacionesController
         {
             $this->view->traerHabitacionesXIdHotel($_REQUEST['idHotel']);
         }
+        if($_REQUEST['opcion']=='selectHabitacionesXIdHotel')
+        {
+            $this->view->selectHabitacionesXIdHotel($_REQUEST['idHotel']);
+        }
+        if($_REQUEST['opcion']=='muestreListadoCheckList')
+        {
+            $this->view->muestreListadoCheckList();
+        }
         if($_REQUEST['opcion']=='grabarHabitacion')
         {
             $this->model->grabarHabitacion($_REQUEST);

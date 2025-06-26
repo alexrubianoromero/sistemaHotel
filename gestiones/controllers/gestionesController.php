@@ -4,19 +4,21 @@ $ruta = dirname(dirname(dirname(__FILE__)));
 // die('llego a opciones'.$ruta);
 require_once($ruta.'/gestiones/views/gestionesView.php');
 require_once($ruta.'/gestiones/models/GestionModel.php');
-// require_once($ruta.'/grupos/models/GrupoModel.php');
+require_once($ruta.'/itemsChecklist/models/ItemChecklistModel.php');
 
 
 class gestionesController
 {
     protected $view;
     protected $GestionModel;
-    // protected $model;
+    protected $itemCheclistModel;
+
     public function __construct()
     {
         // echo 'controlador de opciones';
         $this->view = new gestionesView();
         $this->GestionModel = new GestionModel();
+        $this->itemCheclistModel = new ItemChecklistModelModel();
         // $this->view->menuOpcionesGrupos();
         if($_REQUEST['opcion']=='formuNuevaGestion')
         {
@@ -28,7 +30,10 @@ class gestionesController
         }
         if($_REQUEST['opcion']=='grabarGestion')
         {
-            $this->GestionModel->grabarGestion($_REQUEST);
+            $idGestion = $this->GestionModel->grabarGestion($_REQUEST);
+            // die($idMax);
+            $items = $this->itemCheclistModel->traerItemsCheckList();
+            $this->GestionModel->crearChecklistHabitacion($idGestion,$_REQUEST['idHabitacion'],$items);
             echo 'Gestion Grabada';
         }
         

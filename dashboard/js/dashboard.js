@@ -52,8 +52,8 @@
     }
 
  function grabarGestion(){
-        var observaciones =  document.getElementById("txtobservacion").value;
-        // alert(observaciones);
+       
+        var idHabitacion =  document.getElementById("idHabitacion").value;
         const http=new XMLHttpRequest();
         const url = '../gestiones/gestiones.php';
         http.onreadystatechange = function(){
@@ -65,7 +65,7 @@
         http.open("POST",url);
         http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         http.send("opcion=grabarGestion"
-        + "&observaciones="+observaciones
+        + "&idHabitacion="+idHabitacion
         // + "&tipoMov=2"
         );
     }

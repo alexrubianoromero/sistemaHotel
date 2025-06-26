@@ -1,18 +1,19 @@
 <?php
 $ruta = dirname(dirname(dirname(__FILE__)));
 require_once($ruta.'/gestiones/models/GestionModel.php');
+require_once($ruta.'/hoteles/models/HotelModel.php');
 // die($ruta); 
 // require_once($ruta.'/grupos/views/gruposView.php');
 // require_once($ruta.'/gestiones/models/GestionModel.php');
 
 class gestionesView{
      protected $gestionModel;
-    // protected $gestionModel;
+    protected $hotelModel;
 
     public function __construct()
     {
         $this->gestionModel = new GestionModel();
-        // $this->gestionModel = new GestionModel();
+        $this->hotelModel = new HotelModel();
         // echo 'dashboard view';
 
     }
@@ -20,16 +21,41 @@ class gestionesView{
     public function formuNuevaGestion()
     {
         // echo 'formu nueva gestion';
+        $hoteles = $this->hotelModel->traerHoteles();
         ?>
-           <div class="row mt-3">
-                <div class="col-lg-12">
+           <div class="row ">
+                <div class="col-lg-4 mt-2">
+                    <label for="">Hotel:</label>
+                    <select id="idHotel" class="form-control" onchange="selectHabitacionesXIdHotel();" >
+                        <option value="">Seleccione...</option>
+                        <?php
+                        foreach($hoteles as $hotel)
+                        {
+                            echo '<option value ="'.$hotel['id'].'">'.$hotel['descripcion'].'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col lg-5 mt-2">
+                    <label>Habitacion</label>
+                    <select id="idHabitacion" class="form-control"  ">
+                    </select>
+                </div>
+                <div class="col-lg-12 mt-2" id="div_muestre_checklist">
+
+                </div>
+                <!-- <div class="col-lg-12">
                     <label>Observaciones:</label>
                     <textarea class="form-control" id="txtobservacion"></textarea>
 
-                </div>
+                </div> -->
            </div> 
+           <div class="mt-3">
+                <button type="button" class="btn btn-primary" onclick="grabarGestion();">Crear Gestion</button>
+           </div>
 
-        <?
+        <?php
+        // onchange="muestreListadoCheckList();
     }
     public function formuNuevaGestionAnte()
     {
@@ -76,6 +102,7 @@ class gestionesView{
             <?php
      
     }
+
 
 
 }  

@@ -4,18 +4,19 @@ $ruta = dirname(dirname(dirname(__FILE__)));
 // require_once($ruta.'/grupos/views/gruposView.php');
 require_once($ruta.'/hoteles/models/HotelModel.php');
 require_once($ruta.'/habitaciones/models/HabitacionModel.php');
+require_once($ruta.'/itemsChecklist/models/ItemChecklistModel.php');
 
 class habitacionesView
 {
     protected $hotelModel;
     protected $habitacionModel;
-    // protected $gestionModel;
+    protected $itemCheclistModel;
 
     public function __construct()
     {
         $this->hotelModel = new HotelModel();
         $this->habitacionModel = new HabitacionModel();
-    //     $this->gestionModel = new GestionModel();
+        $this->itemCheclistModel = new ItemChecklistModelModel();
     //     // echo 'dashboard view';
 
     }
@@ -66,6 +67,49 @@ class habitacionesView
         }
         echo '</table>';
         echo '</div>';
+    }
+    public function selectHabitacionesXIdHotel($idHotel)
+    {
+       
+        $habitaciones =   $this->habitacionModel->traerHabitacionesXIdHotel($idHotel); 
+        echo '<option value ="">Seleccione...</option>';
+        foreach($habitaciones as $habitacion)
+        {
+            echo '<option value ="'.$habitacion['id'].'" >'.$habitacion['descripcion'].'</option>';
+        }
+
+    }
+
+    public function muestreListadoCheckList()
+    {
+        ?>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+        </head>
+        <body>
+            <?php
+            header('Content-Type: text/html; charset=UTF-8');
+
+            $itemsCheckList =  $this->itemCheclistModel->traerItemsCheckList();
+            echo '<table class="table table-striped">'; 
+            foreach($itemsCheckList as $item)
+            {
+                echo '<tr>';
+                echo '<td>';
+                echo '<input type="checkbox" id="'.$item['id'].'">';
+                echo '</td>'; 
+                echo '<td>'.$item['descripcion'].'</td>'; 
+                echo '</tr>';
+            }
+            echo '</table>';
+          ?>  
+        </body>
+        </html>
+        <?php
     }
 
 
