@@ -20,6 +20,11 @@ class gestionesController
         $this->GestionModel = new GestionModel();
         $this->itemCheclistModel = new ItemChecklistModelModel();
         // $this->view->menuOpcionesGrupos();
+        if($_REQUEST['opcion']=='actualizarestadoItemgestion')
+        {
+            $this->GestionModel->actualizarItemGestion($_REQUEST); 
+
+        }
         if($_REQUEST['opcion']=='formuNuevaGestion')
         {
             $this->formuNuevaGestion();
@@ -34,7 +39,9 @@ class gestionesController
             // die($idMax);
             $items = $this->itemCheclistModel->traerItemsCheckList();
             $this->GestionModel->crearChecklistHabitacion($idGestion,$_REQUEST['idHabitacion'],$items);
-            echo 'Gestion Grabada';
+            $this->view->muestreListadoCheckListXGestion($idGestion);
+            // echo 'Gestion Grabada';
+
         }
         
 

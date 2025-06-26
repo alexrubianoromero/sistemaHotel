@@ -56,6 +56,7 @@ class dashboardView{
             </html>
             <script src="../dashboard/js/dashboard.js"></script>
             <script src="../habitaciones/js/habitaciones.js"></script>
+            <script src="../gestiones/js/gestiones.js"></script>
         <?php
     }
 

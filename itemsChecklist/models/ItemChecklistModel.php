@@ -14,13 +14,14 @@ class ItemChecklistModelModel extends Conexion
          $ordenes = $this->get_table_assoc($consulta);
          return $ordenes;
         }
-        
-        // public function grabarGestion($request)
-        // {
-        //     $sql = "insert into gestiones (observaciones)   values('".$request['observaciones']."')"; 
-        //     $consulta = mysql_query($sql,$this->connectMysql()); 
-        // }
-
+    public function traerItemsCheckListXId($id)
+    {
+        $sql = "select * from itemschecklist where id = '".$id."' ";
+        // die($sql);
+         $consulta = mysql_query($sql,$this->connectMysql()); 
+         $infoItem = mysql_fetch_assoc($consulta); 
+         return $infoItem;
+        }
 }
 
 

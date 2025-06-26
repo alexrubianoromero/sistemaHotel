@@ -2,6 +2,7 @@
 $ruta = dirname(dirname(dirname(__FILE__)));
 require_once($ruta.'/gestiones/models/GestionModel.php');
 require_once($ruta.'/hoteles/models/HotelModel.php');
+require_once($ruta.'/itemsChecklist/models/ItemChecklistModel.php');
 // die($ruta); 
 // require_once($ruta.'/grupos/views/gruposView.php');
 // require_once($ruta.'/gestiones/models/GestionModel.php');
@@ -9,11 +10,13 @@ require_once($ruta.'/hoteles/models/HotelModel.php');
 class gestionesView{
      protected $gestionModel;
     protected $hotelModel;
+    protected $itemChecklistModel;
 
     public function __construct()
     {
         $this->gestionModel = new GestionModel();
         $this->hotelModel = new HotelModel();
+          $this->itemChecklistModel = new ItemChecklistModelModel();
         // echo 'dashboard view';
 
     }
@@ -103,7 +106,28 @@ class gestionesView{
      
     }
 
+    public function muestreListadoCheckListXGestion($idGestion)
+    {
 
+            $itemsXGestion =  $this->gestionModel->traerItemsXGestion($idGestion);
+            // echo '<pre>'; print_r($itemsXGestion);echo '</pre>';die();
+            echo '<div id="div_tabla_list">'; 
+            echo '<table class="table table-striped">'; 
+            foreach($itemsXGestion as $item)
+            {
+                $infoItem = $this->itemChecklistModel->traerItemsCheckListXId($item['IdItem']);
+                echo '<tr>';
+                echo '<td>';
+                echo '<input type="checkbox" id="'.$item['id'].'" name="'.$item['id'].'" onchange="actualizarestadoItemgestion(this);" >';
+                echo '</td>'; 
+                echo '<td>'.$infoItem['descripcion'].'</td>'; 
+                echo '</tr>';
+            }
+            echo '</table>';
+            echo '</div>';
+    }
+
+        // onkeyup="actualizarestadoItemgestion('.$item['id'].');"
 
 }  
 

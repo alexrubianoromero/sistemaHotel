@@ -39,15 +39,33 @@ class GestionModel extends Conexion
                 $consulta = mysql_query($sql,$this->connectMysql()); 
             }
         }  
-
+        
         public function traerMaxIdGestion()
         {
             $sql = "select max(id) as maxId from gestiones";
             $consulta = mysql_query($sql,$this->connectMysql()); 
             $respu = mysql_fetch_assoc($consulta);
             return $respu['maxId'];
-      }
-}
+        }
+        
+        public function traerItemsXGestion($idGestion)
+        {
+            $sql = "select * from itemsXHabitacion  where idGestion = '".$idGestion."'   order by id ";
+            $consulta = mysql_query($sql,$this->connectMysql()); 
+            $itemsGestion = $this->get_table_assoc($consulta);
+            return $itemsGestion;
+        }
+        
+        public function actualizarItemGestion($request)
+        {
+            $sql = "update itemsXHabitacion   
+            set   valor = '".$request['valor']."'
+            where id = '".$request['idItemGestion']."'
+            "; 
+            $consulta = mysql_query($sql,$this->connectMysql()); 
+            //   die($sql ); 
+        }
+    }
 
 
 
