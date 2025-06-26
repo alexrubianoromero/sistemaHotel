@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Europe/Madrid');
 $ruta = dirname(dirname(dirname(__FILE__)));
 // die($ruta); 
 require_once($ruta.'/grupos/views/gruposView.php');
@@ -123,8 +124,8 @@ class dashboardView{
                     ...
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="mostrarGestiones();">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="grabarGestion();">Grabar Gestion</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+                    <button type="button" class="btn btn-primary" onclick="grabarHabitacion();">Grabar Habitacion</button>
                 </div>
                 </div>
             </div>

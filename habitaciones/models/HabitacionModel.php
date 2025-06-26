@@ -24,11 +24,12 @@ class HabitacionModel extends Conexion
          return $ordenes;
         }
 
-        // public function grabarGestion($request)
-        // {
-        //     $sql = "insert into gestiones (observaciones)   values('".$request['observaciones']."')"; 
-        //     $consulta = mysql_query($sql,$this->connectMysql()); 
-        // }
+        public function grabarHabitacion($request)
+        {
+            $sql = "insert into habitaciones (idHotel,descripcion)   values('".$request['idHotel']."','".$request['descripcion']."')"; 
+        //     die($sql);
+            $consulta = mysql_query($sql,$this->connectMysql()); 
+        }
 
 }
 

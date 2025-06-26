@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Europe/Madrid');
 $ruta = dirname(dirname(dirname(__FILE__)));
 // die($ruta);
 require_once($ruta.'/conexion/Conexion.php');
@@ -17,7 +18,12 @@ class GestionModel extends Conexion
         
         public function grabarGestion($request)
         {
-            $sql = "insert into gestiones (observaciones)   values('".$request['observaciones']."')"; 
+            $fechaActual = new DateTime();
+            $fechaParaMySQL = $fechaActual->format('Y-m-d H:i:s');
+            $sql = "insert into gestiones (observaciones, fecha)   
+            values('".$request['observaciones']."','".$fechaParaMySQL."'
+            
+            )"; 
             $consulta = mysql_query($sql,$this->connectMysql()); 
         }
 

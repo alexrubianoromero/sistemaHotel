@@ -26,41 +26,46 @@ class habitacionesView
         ?>
         <div>
             <label for="">Nueva Habitacion</label>
-            <div class="row mt-3">
-                <div class="col-lg-4 mt-3">
+            <div class="row mt-2">
+                <div class="">
                     <span>Hotel:</span>
-                    <select id="idHotel"class="form-control mt-2" onchange="traerHabitacionesXIdHotel();;">
-                        <option value="">Seleccione..</option>
+                    <select id="idHotel"class="form-control mt-2"  onchange="traerHabitacionesXIdHotel();">
+                        <option value="">Seleccione...</option>
                       <?php
                         foreach($hoteles as $hotel)
                         {
-                            echo '<option value="'.$hotel['id'].'">'.$hotel['descripcion'].'</option>';
+                            echo '<option    value="'.$hotel['id'].'">'.$hotel['descripcion'].'</option>';
                         }
                       ?>
                     </select>
+                </div>
+                <div class="mt-2" id="div_ahabitaciones_existentes">
+
+                </div>
+                <div class="mt-3">
+                    <span>Nombre Habitacion Nueva</span>
+                    <input class="form-control" type="text" id="descripcion">
                 </div>
             </div>
         </div>
         <?php
     }
+
+
     public function traerHabitacionesXIdHotel($idHotel)
     {
+        echo '<div>'; 
+        echo '<table class="table">';
         $habitaciones =   $this->habitacionModel->traerHabitacionesXIdHotel($idHotel); 
-        ?>
-        <div>
-          
-                    <select id="idHotel"class="form-control mt-2" onchange="traerHabitacionesXIdHotel();;">
-                        <option value="">Seleccione..</option>
-                      <?php
-                        foreach($habitaciones as $habitacion)
-                        {
-                            echo '<button>'.$habitacion['Decripcion'].'</button>';
-                        }
-                      ?>
-                    </select>
-             
-        </div>
-        <?php
+        foreach($habitaciones as $habitacion)
+        {
+            // echo '<option value ="'.$habitacion['id'].'">'.$habitacion['descripcion'].'</option>';
+            echo '<tr>'; 
+            echo '<td style="color:blue;">'.$habitacion['descripcion'].'</td>';
+            echo '</tr>';
+        }
+        echo '</table>';
+        echo '</div>';
     }
 
 
