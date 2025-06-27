@@ -24,6 +24,48 @@ class gestionesView{
 
     }
 
+
+     public function mostrarGestiones($filtroFecha=0)
+    {
+         $gestiones = $this->gestionModel->traerGestiones();
+        ?>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Fecha</th>
+                        <th>Hotel</th>
+                        <th>Habitacion</th>
+                        <th>Ver</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        foreach($gestiones as $gestion)
+                        {
+                             $infoHabitacion = $this->habitacionModel->traerHabitacionXId($gestion['idHabitacion']);
+                             $infoHotel =  $this->hotelModel->traerHotelXId($infoHabitacion['idHotel']); 
+                             // echo '<pre>'; print_r($infoHabitacion);echo '</pre>';die();
+                            echo '<tr>';
+                            echo '<td>'.$gestion['id'].'</td>';
+                            echo '<td>'.$gestion['fecha'].'</td>';
+                            echo '<td>'.$infoHotel['descripcion'].'</td>';
+                            echo '<td>'.$infoHabitacion['descripcion'].'</td>';
+                            echo '<td><button 
+                                        class="btn btn-sm btn-primary" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#exampleModal"
+                                        onclick="muestreInfoGestion('.$gestion["id"].');">Ver</button></td>';
+                            echo '</tr>';
+                        }
+                    ?>
+                </tbody>
+            </table>
+            <?php
+     
+    }
+
+
     public function formuNuevaGestion()
     {
         // echo 'formu nueva gestion';
@@ -80,43 +122,15 @@ class gestionesView{
 
 
 
-     public function mostrarGestiones()
-    {
-        // echo 'buenas desde gestion';
-         $gestiones = $this->gestionModel->traerGestiones();
+  
 
-        ?>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Observaciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        foreach($gestiones as $gestion){
-                            echo '<tr>';
-                          
-                            echo '<td>'.strtoupper($gestion['fecha']).'</td>';
-                            echo '<td>'.strtoupper($gestion['observaciones']).'</td>';
-                            echo '</tr>';
-                        }
-                        ?>
-                </tbody>
-            </table>
-            <?php
-     
-    }
-
-    public function muestreListadoCheckListXGestion($idGestion)
+    public function muestreInfoGestion($idGestion)
     {
             $infoGestion= $this->gestionModel->traerGestionXId($idGestion);
             $infoHabitacion = $this->habitacionModel->traerHabitacionXId($infoGestion['idHabitacion']);
             // echo '<pre>'; print_r($infoHabitacion);echo '</pre>';die();
             $infoHotel =  $this->hotelModel->traerHotelXId($infoHabitacion['idHotel']); 
-            $itemsXGestion =  $this->gestionModel->traerItemsXGestion($idGestion);
-          ?>
+            ?>
             <div class="row mt-2">
                 <div class="col-lg-4 mt-2">
                     Hotel: <span><?php  echo $infoHotel['descripcion'] ?></label>
@@ -124,33 +138,40 @@ class gestionesView{
                 <div class="col-lg-4  mt-2">
                     Habitacion: <span><?php  echo $infoHabitacion['descripcion'] ?></label>
                 </div>
+                <div class="col-lg-4  mt-2">
+                    Fecha: <span><?php  echo $infoGestion['fecha'] ?></label>
+                </div>
+                <?php  $this->muestreListadoCheckListXGestion($idGestion)  ?>
             </div>
-          <?php
-            echo '<div id="div_tabla_list" class="mt-2">'; 
-            echo '<table class="table table-striped">'; 
-            foreach($itemsXGestion as $item)
-            {
-                $infoItem = $this->itemChecklistModel->traerItemsCheckListXId($item['IdItem']);
-                //debe ponerlos checkeados si el valor de la tabla es uno para ese idItemGestion
-                echo '<tr>';
-                echo '<td>';
-                if($item['valor']==0)
-                {
-                    echo '<input type="checkbox" id="'.$item['id'].'" name="'.$item['id'].'" onchange="actualizarestadoItemgestion(this);" >';
-                }else{
-                    echo '<input type="checkbox" checked id="'.$item['id'].'" name="'.$item['id'].'" onchange="actualizarestadoItemgestion(this);" >';
-
-                }
-                echo '</td>'; 
-                echo '<td>'.$infoItem['descripcion'].'</td>'; 
-                echo '</tr>';
-            }
-            echo '</table>';
-            echo '</div>';
+            <?php
     }
+    
 
-        // onkeyup="actualizarestadoItemgestion('.$item['id'].');"
-
+    public function muestreListadoCheckListXGestion($idGestion)
+    {
+        $itemsXGestion =  $this->gestionModel->traerItemsXGestion($idGestion);
+        echo '<div id="div_tabla_list" class="mt-2">'; 
+        echo '<table class="table table-striped">'; 
+        foreach($itemsXGestion as $item)
+        {
+            $infoItem = $this->itemChecklistModel->traerItemsCheckListXId($item['IdItem']);
+            echo '<tr>';
+            echo '<td>';
+            if($item['valor']==0)
+            {
+                echo '<input type="checkbox" id="'.$item['id'].'" name="'.$item['id'].'" onchange="actualizarestadoItemgestion(this);" >';
+            }else{
+                echo '<input type="checkbox" checked id="'.$item['id'].'" name="'.$item['id'].'" onchange="actualizarestadoItemgestion(this);" >';
+    
+            }
+            echo '</td>'; 
+            echo '<td><label for="'.$item['id'].'">'.$infoItem['descripcion'].'</label></td>'; 
+            echo '</tr>';
+        }
+        echo '</table>';
+        echo '</div>';
+        
+    }
 }  
 
 

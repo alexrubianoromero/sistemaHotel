@@ -35,15 +35,19 @@ class gestionesController
         }
         if($_REQUEST['opcion']=='muestreInfoGestion')
         {
-            $this->view->muestreListadoCheckListXGestion($_REQUEST['idGestion']);
+            $this->view->muestreInfoGestion($_REQUEST['idGestion']);
         }
+        // if($_REQUEST['opcion']=='muestreInfoGestion')
+        // {
+        //     $this->view->muestreListadoCheckListXGestion($_REQUEST['idGestion']);
+        // }
         if($_REQUEST['opcion']=='grabarGestion')
         {
             $idGestion = $this->GestionModel->grabarGestion($_REQUEST);
             // die($idMax);
             $items = $this->itemCheclistModel->traerItemsCheckList();
             $this->GestionModel->crearChecklistHabitacion($idGestion,$_REQUEST['idHabitacion'],$items);
-            $this->view->muestreListadoCheckListXGestion($idGestion);
+            $this->view->muestreInfoGestion($idGestion);
             // echo 'Gestion Grabada';
 
         }
