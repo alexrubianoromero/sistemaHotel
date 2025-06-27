@@ -2,6 +2,7 @@
 $ruta = dirname(dirname(dirname(__FILE__)));
 require_once($ruta.'/gestiones/models/GestionModel.php');
 require_once($ruta.'/hoteles/models/HotelModel.php');
+require_once($ruta.'/habitaciones/models/HabitacionModel.php');
 require_once($ruta.'/itemsChecklist/models/ItemChecklistModel.php');
 // die($ruta); 
 // require_once($ruta.'/grupos/views/gruposView.php');
@@ -10,13 +11,15 @@ require_once($ruta.'/itemsChecklist/models/ItemChecklistModel.php');
 class gestionesView{
      protected $gestionModel;
     protected $hotelModel;
+    protected $habitacionModel;
     protected $itemChecklistModel;
 
     public function __construct()
     {
         $this->gestionModel = new GestionModel();
         $this->hotelModel = new HotelModel();
-          $this->itemChecklistModel = new ItemChecklistModelModel();
+        $this->habitacionModel = new HabitacionModel();
+        $this->itemChecklistModel = new ItemChecklistModelModel();
         // echo 'dashboard view';
 
     }
@@ -108,10 +111,22 @@ class gestionesView{
 
     public function muestreListadoCheckListXGestion($idGestion)
     {
-
+            $infoGestion= $this->gestionModel->traerGestionXId($idGestion);
+            $infoHabitacion = $this->habitacionModel->traerHabitacionXId($infoGestion['idHabitacion']);
+            // echo '<pre>'; print_r($infoHabitacion);echo '</pre>';die();
+            $infoHotel =  $this->hotelModel->traerHotelXId($infoHabitacion['idHotel']); 
             $itemsXGestion =  $this->gestionModel->traerItemsXGestion($idGestion);
-            // echo '<pre>'; print_r($itemsXGestion);echo '</pre>';die();
-            echo '<div id="div_tabla_list">'; 
+          ?>
+            <div class="row mt-2">
+                <div class="col-lg-4 mt-2">
+                    Hotel: <span><?php  echo $infoHotel['descripcion'] ?></label>
+                </div>
+                <div class="col-lg-4  mt-2">
+                    Habitacion: <span><?php  echo $infoHabitacion['descripcion'] ?></label>
+                </div>
+            </div>
+          <?php
+            echo '<div id="div_tabla_list" class="mt-2">'; 
             echo '<table class="table table-striped">'; 
             foreach($itemsXGestion as $item)
             {

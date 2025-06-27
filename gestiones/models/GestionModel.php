@@ -16,6 +16,16 @@ class GestionModel extends Conexion
          return $ordenes;
         }
         
+    public function traerGestionXId($idGestion)
+    {
+        // echo 'traer gestines '; 
+        $sql = "select * from gestiones where id ='".$idGestion."'     ";
+        // die($sql);
+         $consulta = mysql_query($sql,$this->connectMysql()); 
+         $ordenes = mysql_fetch_assoc($consulta);
+         return $ordenes;
+        }
+        
         public function grabarGestion($request)
         {
             $fechaActual = new DateTime();

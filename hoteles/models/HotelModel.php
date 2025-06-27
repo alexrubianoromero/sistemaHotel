@@ -14,6 +14,15 @@ class HotelModel extends Conexion
          $ordenes = $this->get_table_assoc($consulta);
          return $ordenes;
         }
+    public function traerHotelXId($idHotel)
+    {
+        // echo 'traer gestines '; 
+        $sql = "select * from hoteles where id= '".$idHotel."'  ";
+        // die($sql);
+         $consulta = mysql_query($sql,$this->connectMysql()); 
+         $ordenes = mysql_fetch_assoc($consulta);
+         return $ordenes;
+        }
         
         // public function grabarGestion($request)
         // {

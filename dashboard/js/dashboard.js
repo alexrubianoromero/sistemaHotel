@@ -58,7 +58,7 @@
         const url = '../gestiones/gestiones.php';
         http.onreadystatechange = function(){
             if(this.readyState == 4 && this.status ==200){
-                document.getElementById("div_muestre_checklist").innerHTML = this.responseText;
+                document.getElementById("modalBodyGestion").innerHTML = this.responseText;
             }
         };
         

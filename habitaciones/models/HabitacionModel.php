@@ -14,6 +14,15 @@ class HabitacionModel extends Conexion
          $ordenes = $this->get_table_assoc($consulta);
          return $ordenes;
         }
+        public function traerHabitacionXId($idHabitacion)
+        {
+        // echo 'traer gestines '; 
+         $sql = "select * from habitaciones where id = '".$idHabitacion."' ";
+        // die($sql);
+         $consulta = mysql_query($sql,$this->connectMysql()); 
+         $ordenes = mysql_fetch_assoc($consulta);
+         return $ordenes;
+        }
         public function traerHabitacionesXIdHotel($idHotel)
         {
         // echo 'traer gestines '; 
