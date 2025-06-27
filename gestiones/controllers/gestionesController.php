@@ -33,6 +33,10 @@ class gestionesController
         {
             $this->view->mostrarGestiones();
         }
+        if($_REQUEST['opcion']=='muestreInfoGestion')
+        {
+            $this->view->muestreListadoCheckListXGestion($_REQUEST['idGestion']);
+        }
         if($_REQUEST['opcion']=='grabarGestion')
         {
             $idGestion = $this->GestionModel->grabarGestion($_REQUEST);

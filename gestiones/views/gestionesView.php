@@ -131,9 +131,16 @@ class gestionesView{
             foreach($itemsXGestion as $item)
             {
                 $infoItem = $this->itemChecklistModel->traerItemsCheckListXId($item['IdItem']);
+                //debe ponerlos checkeados si el valor de la tabla es uno para ese idItemGestion
                 echo '<tr>';
                 echo '<td>';
-                echo '<input type="checkbox" id="'.$item['id'].'" name="'.$item['id'].'" onchange="actualizarestadoItemgestion(this);" >';
+                if($item['valor']==0)
+                {
+                    echo '<input type="checkbox" id="'.$item['id'].'" name="'.$item['id'].'" onchange="actualizarestadoItemgestion(this);" >';
+                }else{
+                    echo '<input type="checkbox" checked id="'.$item['id'].'" name="'.$item['id'].'" onchange="actualizarestadoItemgestion(this);" >';
+
+                }
                 echo '</td>'; 
                 echo '<td>'.$infoItem['descripcion'].'</td>'; 
                 echo '</tr>';

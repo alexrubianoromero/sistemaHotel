@@ -2,17 +2,23 @@
 date_default_timezone_set('Europe/Madrid');
 $ruta = dirname(dirname(dirname(__FILE__)));
 // die($ruta); 
-require_once($ruta.'/grupos/views/gruposView.php');
+// require_once($ruta.'/grupos/views/gruposView.php');
 require_once($ruta.'/gestiones/models/GestionModel.php');
+require_once($ruta.'/hoteles/models/HotelModel.php');
+require_once($ruta.'/habitaciones/models/HabitacionModel.php');
 
 class dashboardView{
-    protected $vistaGrupos;
+    // protected $vistaGrupos;
     protected $gestionModel;
+    protected $hotelModel;
+    protected $habitacionModel;
 
     public function __construct()
     {
-        $this->vistaGrupos = new gruposView();
+        // $this->vistaGrupos = new gruposView();
         $this->gestionModel = new GestionModel();
+        $this->hotelModel = new HotelModel();
+        $this->habitacionModel = new HabitacionModel();
         // echo 'dashboard view';
 
     }
@@ -43,7 +49,7 @@ class dashboardView{
                         <button class="btn btn-primary"  
                             data-bs-toggle="modal" 
                             data-bs-target="#exampleModal"
-                            onclick="formuNuevaGestion();"
+                            onclick="formuNuevaGestion()"
                         >Nueva Gestion</button>
                     </div>
                     <div id="div_resultados_dashboard" class="mt-3">
@@ -66,20 +72,33 @@ class dashboardView{
          $gestiones = $this->gestionModel->traerGestiones();
 
         ?>
-            <table class="table">
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Fecha</th>
-                        <th>Observaciones</th>
+                        <th>Hotel</th>
+                        <th>Habitacion</th>
+                        <th>Ver</th>
+                        <!-- <th>Estado</th> -->
+
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                        foreach($gestiones as $gestion){
+                        foreach($gestiones as $gestion)
+                        {
+                             $infoHabitacion = $this->habitacionModel->traerHabitacionXId($gestion['idHabitacion']);
+                             $infoHotel =  $this->hotelModel->traerHotelXId($infoHabitacion['idHotel']); 
+                             // echo '<pre>'; print_r($infoHabitacion);echo '</pre>';die();
                             echo '<tr>';
-                          
-                            echo '<td>'.strtoupper($gestion['fecha']).'</td>';
-                            echo '<td>'.strtoupper($gestion['observaciones']).'</td>';
+                            echo '<td>'.$gestion['fecha'].'</td>';
+                            echo '<td>'.$infoHotel['descripcion'].'</td>';
+                            echo '<td>'.$infoHabitacion['descripcion'].'</td>';
+                            echo '<td><button 
+                                        class="btn btn-sm btn-primary" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#exampleModal"
+                                        onclick="muestreInfoGestion('.$gestion["id"].');">Ver</button></td>';
                             echo '</tr>';
                         }
                         ?>
