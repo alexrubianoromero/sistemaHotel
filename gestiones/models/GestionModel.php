@@ -30,10 +30,14 @@ class GestionModel extends Conexion
         {
             $fechaActual = new DateTime();
             $fechaParaMySQL = $fechaActual->format('Y-m-d H:i:s');
-            $sql = "insert into gestiones (idHabitacion, fecha)   
-            values('".$request['idHabitacion']."','".$fechaParaMySQL."'
+            $sql = "insert into gestiones (idHabitacion, fecha,idCamarera)   
+            values(
+            '".$request['idHabitacion']."'
+            ,'".$fechaParaMySQL."'
+            ,'".$request['idCamarera']."'
             
             )"; 
+            // die($sql); 
             $consulta = mysql_query($sql,$this->connectMysql()); 
             $maxId = $this->traerMaxIdGestion();
             return $maxId;

@@ -4,15 +4,17 @@ require_once($ruta.'/gestiones/models/GestionModel.php');
 require_once($ruta.'/hoteles/models/HotelModel.php');
 require_once($ruta.'/habitaciones/models/HabitacionModel.php');
 require_once($ruta.'/itemsChecklist/models/ItemChecklistModel.php');
+require_once($ruta.'/camareras/models/CamareraModel.php');
 // die($ruta); 
 // require_once($ruta.'/grupos/views/gruposView.php');
 // require_once($ruta.'/gestiones/models/GestionModel.php');
 
 class gestionesView{
-     protected $gestionModel;
+    protected $gestionModel;
     protected $hotelModel;
     protected $habitacionModel;
     protected $itemChecklistModel;
+    protected $camareraModel;
 
     public function __construct()
     {
@@ -20,6 +22,7 @@ class gestionesView{
         $this->hotelModel = new HotelModel();
         $this->habitacionModel = new HabitacionModel();
         $this->itemChecklistModel = new ItemChecklistModelModel();
+        $this->camareraModel = new CamareraModel();
         // echo 'dashboard view';
 
     }
@@ -70,6 +73,7 @@ class gestionesView{
     {
         // echo 'formu nueva gestion';
         $hoteles = $this->hotelModel->traerHoteles();
+        $camareras = $this->camareraModel->traerCamareras();
         ?>
            <div class="row ">
                 <div class="col-lg-4 mt-2">
@@ -87,6 +91,18 @@ class gestionesView{
                 <div class="col lg-5 mt-2">
                     <label>Habitacion</label>
                     <select id="idHabitacion" class="form-control"  ">
+                    </select>
+                </div>
+                <div class="col lg-5 mt-2" id="div_camareras">
+                        <label for="">Camarera:</label>
+                        <select id="idCamarera" class="form-control" >
+                        <option value="">Seleccione...</option>
+                        <?php
+                        foreach($camareras as $camarera)
+                        {
+                            echo '<option value ="'.$camarera['id'].'">'.$camarera['nombre'].'</option>';
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="col-lg-12 mt-2" id="div_muestre_checklist">
@@ -130,7 +146,7 @@ class gestionesView{
             $infoHabitacion = $this->habitacionModel->traerHabitacionXId($infoGestion['idHabitacion']);
             // echo '<pre>'; print_r($infoHabitacion);echo '</pre>';die();
             $infoHotel =  $this->hotelModel->traerHotelXId($infoHabitacion['idHotel']); 
-            ?>
+            $infoCamarera =   $this->camareraModel->traerCamareraXId($infoGestion['idCamarera']);            ?>
             <div class="row mt-2">
                 <div class="col-lg-4 mt-2">
                     Hotel: <span><?php  echo $infoHotel['descripcion'] ?></label>
@@ -140,6 +156,9 @@ class gestionesView{
                 </div>
                 <div class="col-lg-4  mt-2">
                     Fecha: <span><?php  echo $infoGestion['fecha'] ?></label>
+                </div>
+                <div class="col-lg-4  mt-2">
+                    Camarera: <span><?php  echo $infoCamarera['nombre'] ?></label>
                 </div>
                 <?php  $this->muestreListadoCheckListXGestion($idGestion)  ?>
                 <div>
