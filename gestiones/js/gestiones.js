@@ -36,3 +36,26 @@ function actualizarestadoItemgestion(elemento)
         );
     }
  
+ function actualizarGestionNueva(idGestion){
+         var incidenciasSwitch =  document.getElementById("incidenciasSwitch")
+         var valorIncidencias= 0;
+         if(incidenciasSwitch.checked){
+          valorIncidencias= 1;
+         }
+         var observacionesGestion =  document.getElementById("observacionesGestion").value;
+        const http=new XMLHttpRequest();
+        const url = '../gestiones/gestiones.php';
+        http.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status ==200){
+                document.getElementById("modalBodyGestion").innerHTML = this.responseText;
+            }
+        };
+        http.open("POST",url);
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.send("opcion=actualizarGestionNueva"
+        + "&idGestion="+idGestion
+        + "&valorIncidencias="+valorIncidencias
+        + "&observacionesGestion="+observacionesGestion
+        );
+    }
+ 

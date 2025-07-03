@@ -75,6 +75,17 @@ class GestionModel extends Conexion
             $consulta = mysql_query($sql,$this->connectMysql()); 
             //   die($sql ); 
         }
+
+
+        public function actualizarGestion($request)
+        {
+               $sql = "update gestiones set 
+               incidencias = '".$request['valorIncidencias']."' 
+               ,observaciones = '".$request['observacionesGestion']."' 
+               where id = '".$request['idGestion']."' 
+               " ;
+                $consulta = mysql_query($sql,$this->connectMysql()); 
+        }
     }
 
 

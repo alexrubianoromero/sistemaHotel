@@ -37,6 +37,12 @@ class gestionesController
         {
             $this->view->muestreInfoGestion($_REQUEST['idGestion']);
         }
+        if($_REQUEST['opcion']=='actualizarGestionNueva')
+        {
+            // echo '<pre>';  print_r($_REQUEST); echo '</pre>';
+            $this->GestionModel->actualizarGestion($_REQUEST);
+            echo 'Gestion Actualizada';
+        }
         // if($_REQUEST['opcion']=='muestreInfoGestion')
         // {
         //     $this->view->muestreListadoCheckListXGestion($_REQUEST['idGestion']);

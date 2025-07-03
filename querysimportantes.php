@@ -1,0 +1,2 @@
+truncate gestiones;
+truncate itemsXHabitacion;

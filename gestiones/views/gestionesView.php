@@ -142,6 +142,25 @@ class gestionesView{
                     Fecha: <span><?php  echo $infoGestion['fecha'] ?></label>
                 </div>
                 <?php  $this->muestreListadoCheckListXGestion($idGestion)  ?>
+                <div>
+               
+                    <div class="form-check form-switch">
+                        <?php  
+                        if($infoGestion['incidencias']==1){
+                            echo '<input checked class="form-check-input" type="checkbox" role="switch" id="incidenciasSwitch">';
+                        }else {
+                            echo '<input class="form-check-input" type="checkbox" role="switch" id="incidenciasSwitch">';
+                        }
+                        ?>
+                     <label class="form-check-label" for="incidenciasSwitch">Incidencias</label>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <textarea class="form-control" rows = "4" id="observacionesGestion"><?php echo $infoGestion['observaciones'] ?> </textarea>
+                </div>
+                <div class="mt-2 text-center">
+                    <button class="btn btn-primary" onclick ="actualizarGestionNueva(<?php echo $idGestion ?>);"  >Grabar Cambios</button>
+                </div>
             </div>
             <?php
     }
